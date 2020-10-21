@@ -9,21 +9,21 @@ import (
 var ctx = context.Background()
 
 var (
-	CacheDB CustomHTTPClient
+	CacheDB *redis.Client
 )
 
 func InitCache(opts *LinkyCoreOptions) {
-	CacheDB := redis.NewClient(&redis.Options{
+	CacheDB = redis.NewClient(&redis.Options{
 		Addr:     opts.CacheDBAddr,
 		Password: opts.CacheDBPassword,
 		DB:       opts.CacheDBIndex,
 	})
 }
 
-func CacheSetItem(key string, value string) {
+func CacheSetItem(key string, value string) error {
 	return CacheDB.Set(ctx, key, value, 0).Err()
 }
 
-func CacheGetItem(key string) {
+func CacheGetItem(key string) (string, error) {
 	return CacheDB.Get(ctx, key).Result()
 }

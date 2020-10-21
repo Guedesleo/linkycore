@@ -17,18 +17,23 @@ func Init() {
 	opts := LinkyCoreOptions{
 		LogMode:         false,
 		DbURI:           GetEnv("DB_URI", "project:project@(database)/project"),
-		CacheDBAddr:     GetEnv("CACHE_DB_ADDR"),
-		CacheDBPassword: GetEnv("CACHE_DB_PASSWORD"),
-		CacheDBIndex:    strconv.Atoi(GetEnv("CACHE_DB_DB", "1")),
+		CacheDBAddr:     GetEnv("CACHE_DB_ADDR", "localhost:6379"),
+		CacheDBPassword: GetEnv("CACHE_DB_PASSWORD", ""),
+		CacheDBIndex:    0,
 	}
 
-	envLogMode := GetEnv("LOG_MODE")
-	if envLogMode {
+	envLogMode := GetEnv("LOG_MODE", "")
+	if envLogMode != "" {
 		opts.LogMode = true
+	}
+
+	cacheDBIndex, _ := strconv.Atoi(GetEnv("CACHE_DB_DB", "0"))
+	if cacheDBIndex != 0 {
+		opts.CacheDBIndex = cacheDBIndex
 	}
 
 	HttpClient = &http.Client{}
 
-	InitSanitizer(opts)
-	InitDB(opts)
+	InitSanitizer(&opts)
+	InitDB(&opts)
 }
