@@ -36,4 +36,5 @@ func Init() {
 
 	InitSanitizer(&opts)
 	InitDB(&opts)
+	InitCache(&opts)
 }

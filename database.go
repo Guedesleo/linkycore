@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/jinzhu/gorm"
+	// Mysql adapter importer, required for Apps with mysql
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 

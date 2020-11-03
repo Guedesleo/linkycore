@@ -20,10 +20,10 @@ func InitCache(opts *LinkyCoreOptions) {
 	})
 }
 
-func CacheSetItem(key string, value string) error {
-	return CacheDB.Set(ctx, key, value, 0).Err()
-}
-
 func CacheGetItem(key string) (string, error) {
 	return CacheDB.Get(ctx, key).Result()
+}
+
+func CacheSetItem(key string, value string) error {
+	return CacheDB.Set(ctx, key, value, 0).Err()
 }
