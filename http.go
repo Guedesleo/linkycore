@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+// CustomHTTPClient - Custom http client required to make requests testable
 type CustomHTTPClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
@@ -18,7 +19,8 @@ var (
 	HttpClient CustomHTTPClient
 )
 
-// Get - Start a Get response and returns the http.Response without parse data
+// Get - Start a Get response and returns the http.Response without parse data.
+// You need to call defer resp.Body.Close() after handle resulted error
 func Get(url string, contentType string) (*http.Response, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -36,15 +38,6 @@ func Get(url string, contentType string) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	defer resp.Body.Close()
-
-	bodyBytes, err2 := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err2
-	}
-	bodyString := string(bodyBytes)
-	fmt.Println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa:", bodyString)
 
 	return resp, err
 }
