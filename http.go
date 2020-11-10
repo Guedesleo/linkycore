@@ -89,14 +89,6 @@ func PostJSON(url string, body interface{}, target interface{}) error {
 
 // PostFormURLEncoded - Send a post request with form url encoded request body
 func PostFormURLEncoded(url string, body url.Values, target interface{}) error {
-	// data := url.Values{}
-	// data.Set("name", "foo")
-	// data.Set("surname", "bar")
-
-	fmt.Println(body)
-	fmt.Println(body.Encode())
-	fmt.Println("encode ^^^")
-
 	req, err := http.NewRequest(http.MethodPost, url, strings.NewReader(body.Encode()))
 	if err != nil {
 		return err
@@ -112,9 +104,6 @@ func PostFormURLEncoded(url string, body url.Values, target interface{}) error {
 	if err != nil {
 		return err
 	}
-	bodyString := string(bodyBytes)
-
-	fmt.Println("Result from PostFormUrlEncoded", bodyString)
 
 	return json.Unmarshal(bodyBytes, target)
 }
