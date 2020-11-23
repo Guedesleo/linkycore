@@ -5,6 +5,7 @@ import (
 	"strconv"
 )
 
+// LinkyCoreOptions - Linky core configuration options
 type LinkyCoreOptions struct {
 	LogMode         bool
 	DbURI           string
@@ -13,6 +14,7 @@ type LinkyCoreOptions struct {
 	CacheDBIndex    int
 }
 
+// Init -
 func Init() {
 	opts := LinkyCoreOptions{
 		LogMode:         false,
@@ -22,10 +24,7 @@ func Init() {
 		CacheDBIndex:    0,
 	}
 
-	envLogMode := GetEnv("LOG_MODE", "")
-	if envLogMode != "" {
-		opts.LogMode = true
-	}
+	opts.LogMode = GetBoolEnv("LOG_MODE", true)
 
 	cacheDBIndex, _ := strconv.Atoi(GetEnv("CACHE_DB_DB", "0"))
 	if cacheDBIndex != 0 {
