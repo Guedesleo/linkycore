@@ -26,3 +26,14 @@ func GetBoolEnv(key string, fallback bool) bool {
 
 	return fallback
 }
+
+//GetIntEnv - Get and int env var. 
+func GetenvInt(key string, fallback int) int {
+	if value, ok := os.LookupEnv(key); ok {
+		intEnv, err := strconv.Atoi(value)
+		if err == nil {
+			return intEnv
+		}
+	}
+	return fallback
+}
